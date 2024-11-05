@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kustomize-inline-guestbook
+  namespace: argocd
+spec:
+  destination:
+    namespace: test1
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    kustomize:
+      patches:
+      - patch: |-
+          - op: replace
+            path: /spec/template/spec/containers/0/env/1/value
+            value: cluster_name_1
+        target:
+          kind: Deployment
+          name: guestbook-ui
+    path: app
+    repoURL: https://github.com/ariadnarouco/argo-kustomize.git
+    targetRevision: main
+  syncPolicy:
+    automated: {}
