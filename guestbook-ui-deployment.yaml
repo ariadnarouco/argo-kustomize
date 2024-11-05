@@ -19,3 +19,8 @@ spec:
         name: guestbook-ui
         ports:
         - containerPort: 80
+        env:
+        - name: DD_TAGS
+          value: app:app_name,bla:bla
+        - name: DD_TAGS_TEST
+          value: cluster_name
