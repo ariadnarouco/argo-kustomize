@@ -3,6 +3,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: guestbook-ui
+  annotations:
+    my-old-annotation: old
 spec:
   replicas: 1
   revisionHistoryLimit: 3
@@ -23,7 +25,7 @@ spec:
               echo -en '\n';
               printenv MY_NODE_NAME MY_POD_NAME MY_POD_NAMESPACE;
               printenv MY_POD_IP MY_POD_SERVICE_ACCOUNT;
-              printenv LABELS;
+              printenv CLUSTER_NAME;
               sleep 10;
             done;
           env:
@@ -47,6 +49,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: spec.serviceAccountName
+            - name: LABELS
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.labels['app']
             - name: CLUSTER_NAME
               valueFrom:
                 fieldRef:
