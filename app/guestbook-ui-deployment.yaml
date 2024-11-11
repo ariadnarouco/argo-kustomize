@@ -47,7 +47,7 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: spec.serviceAccountName
-            - name: LABELS
+            - name: CLUSTER_NAME
               valueFrom:
                 fieldRef:
-                  fieldPath: metadata.labels['app']
+                  fieldPath: metadata.annotations['clusterName']
